@@ -1,2 +1,74 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Clearing all data
+rm(list = ls()) 
+gc() 
+# Setting seed for reproducibility
+set.seed(1000)
+
+# load libraries ----
+library(data.table)
+library(ggplot2)
+library(dplyr)
+library(psych)
+library(caret)
+library(class)
+library(e1071) # svm
+library(nortest)
+library(rpart) # decision tree
+library(rpart.plot)
+library(ROCR) # roc
+library(GGally) #correlation analysis package ***
+
+## Data Importing ----
+# Importing csv file regarding online news articles and its popularity
+  news.pop <- fread(input = "Downloads/OnlineNewsPopularity/OnlineNewsPopularity.csv", header = TRUE)
+
+# Checking head of the data file
+head(news.pop)
+
+# Checking number of rows of the data file
+nrow(news.pop)
+
+# Checking for na values in the data file
+colSums(is.na(news.pop)) 
+
+
+## Data Cleaning ----
+# Creating variable shares to make logistic prediction for popularity possible
+news.pop$shares <- ifelse(news.pop$shares > 1000, 1, 0)
+news.pop$shares <- as.factor(news.pop$shares)
+
+# Removing url column from the data file
+news.pop <- news.pop[,-1]
+
+# Creating variable day as a factor
+# Combining seven different variables given into one
+news.pop$day <- news.pop$weekday_is_monday + news.pop$weekday_is_tuesday*2 + news.pop$weekday_is_wednesday*3 + 
+                news.pop$weekday_is_thursday*4 + news.pop$weekday_is_friday*5 + news.pop$weekday_is_saturday*6
+news.pop$day <- as.factor(news.pop$day)
+
+# Removing now redundant columns
+news.pop <- news.pop[,-c("weekday_is_monday", "weekday_is_tuesday", "weekday_is_wednesday", "weekday_is_thursday",
+                         "weekday_is_friday", "weekday_is_saturday", "weekday_is_sunday", "is_weekend")]
+
+# Creating variable data channel as a factor
+# Combining six different data channels into one factor
+news.pop$data_channel <- news.pop$data_channel_is_lifestyle + news.pop$data_channel_is_entertainment*2 + news.pop$data_channel_is_bus*3 +
+                        news.pop$data_channel_is_socmed*4 + news.pop$data_channel_is_tech*5 + news.pop$data_channel_is_world*6
+news.pop$data_channel <- as.factor(news.pop$data_channel)
+
+# Removing now redundant columns
+news.pop <- news.pop[,-c("data_channel_is_lifestyle", "data_channel_is_entertainment", "data_channel_is_bus", 
+                         "data_channel_is_socmed", "data_channel_is_tech", "data_channel_is_world")]
+
+# Searching for outliers ----
+variables <- colnames(news.pop[,-c("data_channel", "day")])
+
+# Creating boxplot for all numerical variables
+for (i in variables) {
+  # boxplot(news.pop[,i,with=FALSE], main = i) // Remove later
+}
+
+# Variables with outliers
+# Not including variables with range of -1 to 1 or 0 to 1
+# self_reference_avg_sharess, self_reference_max_shares, self_reference_min_shares, kw values, num_videos, num_imgs,
+# num_self_hrefs, num_hrefs, n_non_stop_unique_tokens, n_non_stop_words, n_unique_tokens, n_tokens_content
