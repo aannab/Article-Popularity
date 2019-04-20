@@ -35,7 +35,7 @@ colSums(is.na(news.pop))
 ## Data Cleaning ----
 # Creating variable shares to make logistic prediction for popularity possible
 news.pop$shares <- ifelse(news.pop$shares > 1000, 1, 0)
-news.pop$shares <- as.factor(news.pop$shares)
+news.pop$shares <- as.factor(news.pop$shares) 
 
 # Removing url column from the data file
 news.pop <- news.pop[,-1]
