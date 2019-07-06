@@ -84,3 +84,4 @@ top <- 3*IQR(unlist(news.pop[,i,with=FALSE]), na.rm = TRUE) + summary(unlist(new
 bottom <- summary(unlist(news.pop[,i,with=FALSE]), na.rm = TRUE) [2] - 3*IQR(unlist(news.pop[,i,with = FALSE]), na.rm = TRUE)
 news.pop[unlist(news.pop[,i,
 
+ 
