@@ -10,7 +10,7 @@ library(ggplot2)
 library(dplyr)
 library(psych)
 library(caret)
-library(class)
+library(class) 
 library(e1071) # svm
 library(nortest)
 library(rpart) # decision tree
