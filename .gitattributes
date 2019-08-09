@@ -82,6 +82,8 @@ for (i in outlier){
 # boxplot(news.pop[,i,with=FALSE], main = i) // remove later
 top <- 3*IQR(unlist(news.pop[,i,with=FALSE]), na.rm = TRUE) + summary(unlist(news.pop[,i,with=FALSE]), na.rm= TRUE)[5]
 bottom <- summary(unlist(news.pop[,i,with=FALSE]), na.rm = TRUE) [2] - 3*IQR(unlist(news.pop[,i,with = FALSE]), na.rm = TRUE)
-news.pop[unlist(news.pop[,i,
+news.pop[unlist(news.pop[,i,with = FALSE]) > top][,i] <- top
+  news.pop[unlist(news.pop[,i,with = FALSE]) < bottom][,i] <- bottom
+}  n 
 
  
