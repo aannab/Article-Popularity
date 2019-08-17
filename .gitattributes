@@ -86,4 +86,4 @@ news.pop[unlist(news.pop[,i,with = FALSE]) > top][,i] <- top
   news.pop[unlist(news.pop[,i,with = FALSE]) < bottom][,i] <- bottom
 }  n 
 
- 
+   
