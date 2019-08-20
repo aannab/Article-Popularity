@@ -54,7 +54,7 @@ news.pop <- news.pop[,-c("weekday_is_monday", "weekday_is_tuesday", "weekday_is_
 # Combining six different data channels into one factor
 news.pop$data_channel <- news.pop$data_channel_is_lifestyle + news.pop$data_channel_is_entertainment*2 + news.pop$data_channel_is_bus*3 +
                         news.pop$data_channel_is_socmed*4 + news.pop$data_channel_is_tech*5 + news.pop$data_channel_is_world*6
-news.pop$data_channel <- as.factor(news.pop$data_channel)
+news.pop$data_channel <- as.factor(news.pop$data_channel) 
 
 # Removing now redundant columns
 news.pop <- news.pop[,-c("data_channel_is_lifestyle", "data_channel_is_entertainment", "data_channel_is_bus", 
